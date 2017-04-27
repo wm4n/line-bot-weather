@@ -1,0 +1,26 @@
+{
+  "name": "nodejs-starter",
+  "version": "1.0.0",
+  "description": "A pure Node.JS and Express boilerplate setup",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js" // For heroku to start our server
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wm4n/nodejs-starter.git"
+  },
+  "keywords": [
+    "node"
+  ],
+  "author": "William Chao (wmandev@gmail.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/wm4n/nodejs-starter/issues"
+  },
+  "homepage": "https://github.com/wm4n/nodejs-starter#readme",
+  "dependencies": {
+    "express": "^4.15.2"
+  }
+}
