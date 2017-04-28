@@ -30,7 +30,7 @@ git push heroku line-bot:master
 
 6. Add environment variables to Heroku
 
-    ```
+```bash
 heroku config:set channelId="Your Channel ID"
 heroku config:set channelSecret="Your Channel Secret"
 heroku config:set channelAccessToken="Your Channel Access Token"
