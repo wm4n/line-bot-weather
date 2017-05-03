@@ -17,3 +17,11 @@ heroku config:set heweather_key="<YOUR API KEY>"
 ```
 
 4. Your LINE bot should be able to answer few weather questions.
+
+### How to use
+
+* Ask "天氣" to get current weather in Taipei (Yep, default is Taipei).
+
+* Ask "溫度" to get current temperature in Taipei.
+
+* Prefix "City name" in front to get weather or temperature in a particular city. Note that name must be in English if the specified city is not within Taiwan or China region. For example, "高雄天氣", "Tokyo溫度", "Melbourne天氣".
