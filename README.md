@@ -1,4 +1,4 @@
-## LINE bot weather
+## LINE Bot Weather
 
 A LINE bot that responds to weather questions (In Traditional Chinese)
 
