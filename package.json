@@ -1,7 +1,7 @@
 {
-  "name": "nodejs-starter",
+  "name": "line-bot-weather",
   "version": "1.0.0",
-  "description": "A pure Node.JS and Express boilerplate setup",
+  "description": "A LINE bot that responds to weather conversation",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -9,18 +9,21 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/wm4n/nodejs-starter.git"
+    "url": "git+https://github.com/wm4n/line-bot-weather.git"
   },
   "keywords": [
-    "node"
+    "node", "line", "bot", "line-bot", "linebot"
   ],
   "author": "William Chao (wmandev@gmail.com)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/wm4n/nodejs-starter/issues"
+    "url": "https://github.com/wm4n/line-bot-weather/issues"
   },
-  "homepage": "https://github.com/wm4n/nodejs-starter#readme",
+  "homepage": "https://github.com/wm4n/line-bot-weather#readme",
   "dependencies": {
-    "express": "^4.15.2"
+    "axios": "^0.16.1",
+    "express": "^4.15.2",
+    "linebot": "^1.3.0",
+    "lodash": "^4.17.4"
   }
 }

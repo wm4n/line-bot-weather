@@ -1,15 +1,31 @@
-const express = require('express');
+const express = require("express");
+const linebot = require("linebot");
+const chat = require("./chat.js");
 
-// port for our server...
-// evn.PORT is for heroku deployment
 const PORT = process.env.PORT || 3123;
+const HEWEATHER_KEY = process.env.heweather_key;
 
-// Create our app...
+const bot = linebot({
+  channelId: process.env.channelId,
+  channelSecret: process.env.channelSecret,
+  channelAccessToken: process.env.channelAccessToken
+});
+
+bot.on('message', function(event) {
+  if (event.message.type = 'text') {
+    const msg = event.message.text;
+    let r = chat.resolve(msg);
+    if(null !== r) {
+      r.then(res => event.reply(res));
+    } 
+  }
+});
+
+// Create our app
 const app = express();
-
-// Serve the public folder...
-app.use(express.static(__dirname + '/public'));
+const linebotParser = bot.parser();
+app.post('/', linebotParser);
 
 app.listen(PORT, function () {
-  console.log(`Express server is up running on port ${PORT}`);
+  console.log(`Express server is up on port ${PORT}`);
 });
