@@ -1,0 +1,258 @@
+{
+    "100": {
+        "zhtw": "晴",
+        "en": "Sunny/Clear",
+        "icon": "https://cdn.heweather.com/cond_icon/100.png"
+    },
+    "101": {
+        "zhtw": "多雲",
+        "en": "Cloudy",
+        "icon": "https://cdn.heweather.com/cond_icon/101.png"
+    },
+    "102": {
+        "zhtw": "少雲",
+        "en": "Few Clouds",
+        "icon": "https://cdn.heweather.com/cond_icon/102.png"
+    },
+    "103": {
+        "zhtw": "晴間多雲",
+        "en": "Partly Cloudy",
+        "icon": "https://cdn.heweather.com/cond_icon/103.png"
+    },
+    "104": {
+        "zhtw": "陰",
+        "en": "Overcast",
+        "icon": "https://cdn.heweather.com/cond_icon/104.png"
+    },
+    "200": {
+        "zhtw": "有風",
+        "en": "Windy",
+        "icon": "https://cdn.heweather.com/cond_icon/200.png"
+    },
+    "201": {
+        "zhtw": "平靜",
+        "en": "Calm",
+        "icon": "https://cdn.heweather.com/cond_icon/201.png"
+    },
+    "202": {
+        "zhtw": "微風",
+        "en": "Light Breeze",
+        "icon": "https://cdn.heweather.com/cond_icon/202.png"
+    },
+    "203": {
+        "zhtw": "和風",
+        "en": "Moderate/Gentle Breeze",
+        "icon": "https://cdn.heweather.com/cond_icon/203.png"
+    },
+    "204": {
+        "zhtw": "清風",
+        "en": "Fresh Breeze",
+        "icon": "https://cdn.heweather.com/cond_icon/204.png"
+    },
+    "205": {
+        "zhtw": "強風/勁風",
+        "en": "Strong Breeze",
+        "icon": "https://cdn.heweather.com/cond_icon/205.png"
+    },
+    "206": {
+        "zhtw": "疾風",
+        "en": "High Wind, Near Gale",
+        "icon": "https://cdn.heweather.com/cond_icon/206.png"
+    },
+    "207": {
+        "zhtw": "大風",
+        "en": "Gale",
+        "icon": "https://cdn.heweather.com/cond_icon/207.png"
+    },
+    "208": {
+        "zhtw": "烈風",
+        "en": "Strong Gale",
+        "icon": "https://cdn.heweather.com/cond_icon/208.png"
+    },
+    "209": {
+        "zhtw": "風暴",
+        "en": "Storm",
+        "icon": "https://cdn.heweather.com/cond_icon/209.png"
+    },
+    "210": {
+        "zhtw": "狂爆風",
+        "en": "Violent Storm",
+        "icon": "https://cdn.heweather.com/cond_icon/210.png"
+    },
+    "211": {
+        "zhtw": "颶風",
+        "en": "Hurricane",
+        "icon": "https://cdn.heweather.com/cond_icon/211.png"
+    },
+    "212": {
+        "zhtw": "龍捲風",
+        "en": "Tornado",
+        "icon": "https://cdn.heweather.com/cond_icon/212.png"
+    },
+    "213": {
+        "zhtw": "熱帶風暴",
+        "en": "Tropical Storm",
+        "icon": "https://cdn.heweather.com/cond_icon/213.png"
+    },
+    "300": {
+        "zhtw": "陣雨",
+        "en": "Shower Rain",
+        "icon": "https://cdn.heweather.com/cond_icon/300.png",
+        "reply": "外面濕搭搭的喔～"
+    },
+    "301": {
+        "zhtw": "強陣雨",
+        "en": "Heavy Shower Rain",
+        "icon": "https://cdn.heweather.com/cond_icon/301.png"
+    },
+    "302": {
+        "zhtw": "雷陣雨",
+        "en": "Thundershower",
+        "icon": "https://cdn.heweather.com/cond_icon/302.png"
+    },
+    "303": {
+        "zhtw": "強雷陣雨",
+        "en": "Heavy Thunderstorm",
+        "icon": "https://cdn.heweather.com/cond_icon/303.png"
+    },
+    "304": {
+        "zhtw": "雷陣雨伴有冰雹",
+        "en": "Hail",
+        "icon": "https://cdn.heweather.com/cond_icon/304.png"
+    },
+    "305": {
+        "zhtw": "小雨",
+        "en": "Light Rain",
+        "icon": "https://cdn.heweather.com/cond_icon/305.png"
+    },
+    "306": {
+        "zhtw": "中雨",
+        "en": "Moderate Rain",
+        "icon": "https://cdn.heweather.com/cond_icon/306.png"
+    },
+    "307": {
+        "zhtw": "大雨",
+        "en": "Heavy Rain",
+        "icon": "https://cdn.heweather.com/cond_icon/307.png"
+    },
+    "308": {
+        "zhtw": "極端降雨",
+        "en": "Extreme Rain",
+        "icon": "https://cdn.heweather.com/cond_icon/308.png"
+    },
+    "309": {
+        "zhtw": "毛毛雨/細雨",
+        "en": "Drizzle Rain",
+        "icon": "https://cdn.heweather.com/cond_icon/309.png"
+    },
+    "310": {
+        "zhtw": "暴雨",
+        "en": "Storm",
+        "icon": "https://cdn.heweather.com/cond_icon/310.png"
+    },
+    "311": {
+        "zhtw": "大暴雨",
+        "en": "Heavy Storm",
+        "icon": "https://cdn.heweather.com/cond_icon/311.png"
+    },
+    "312": {
+        "zhtw": "特大暴雨",
+        "en": "Severe Storm",
+        "icon": "https://cdn.heweather.com/cond_icon/312.png"
+    },
+    "313": {
+        "zhtw": "凍雨",
+        "en": "Freezing Rain",
+        "icon": "https://cdn.heweather.com/cond_icon/313.png"
+    },
+    "400": {
+        "zhtw": "小雪",
+        "en": "Light Snow",
+        "icon": "https://cdn.heweather.com/cond_icon/400.png"
+    },
+    "401": {
+        "zhtw": "中雪",
+        "en": "Moderate Snow",
+        "icon": "https://cdn.heweather.com/cond_icon/401.png"
+    },
+    "402": {
+        "zhtw": "大雪",
+        "en": "Heavy Snow",
+        "icon": "https://cdn.heweather.com/cond_icon/402.png"
+    },
+    "403": {
+        "zhtw": "暴雪",
+        "en": "Snowstorm",
+        "icon": "https://cdn.heweather.com/cond_icon/403.png"
+    },
+    "404": {
+        "zhtw": "雨夾雪",
+        "en": "Sleet",
+        "icon": "https://cdn.heweather.com/cond_icon/404.png"
+    },
+    "405": {
+        "zhtw": "雨雪天氣",
+        "en": "Rain And Snow",
+        "icon": "https://cdn.heweather.com/cond_icon/405.png"
+    },
+    "406": {
+        "zhtw": "陣雨夾雪",
+        "en": "Shower Snow",
+        "icon": "https://cdn.heweather.com/cond_icon/406.png"
+    },
+    "407": {
+        "zhtw": "陣雪",
+        "en": "Snow Flurry",
+        "icon": "https://cdn.heweather.com/cond_icon/407.png"
+    },
+    "500": {
+        "zhtw": "薄霧",
+        "en": "Mist",
+        "icon": "https://cdn.heweather.com/cond_icon/500.png"
+    },
+    "501": {
+        "zhtw": "霧",
+        "en": "Foggy",
+        "icon": "https://cdn.heweather.com/cond_icon/501.png"
+    },
+    "502": {
+        "zhtw": "霾",
+        "en": "Haze",
+        "icon": "https://cdn.heweather.com/cond_icon/502.png"
+    },
+    "503": {
+        "zhtw": "揚沙",
+        "en": "Sand",
+        "icon": "https://cdn.heweather.com/cond_icon/503.png"
+    },
+    "504": {
+        "zhtw": "浮塵",
+        "en": "Dust",
+        "icon": "https://cdn.heweather.com/cond_icon/504.png"
+    },
+    "507": {
+        "zhtw": "沙塵暴",
+        "en": "Duststorm",
+        "icon": "https://cdn.heweather.com/cond_icon/507.png"
+    },
+    "508": {
+        "zhtw": "強沙塵暴",
+        "en": "Sandstorm",
+        "icon": "https://cdn.heweather.com/cond_icon/508.png"
+    },
+    "900": {
+        "zhtw": "熱",
+        "en": "Hot",
+        "icon": "https://cdn.heweather.com/cond_icon/900.png"
+    },
+    "901": {
+        "zhtw": "冷",
+        "en": "Cold",
+        "icon": "https://cdn.heweather.com/cond_icon/901.png"
+    },
+    "999": {
+        "zhtw": "未知",
+        "en": "Unknown",
+        "icon": "https://cdn.heweather.com/cond_icon/999.png"
+    }
+}
