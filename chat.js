@@ -157,7 +157,7 @@ function resolve(message) {
         console.log(result);
         if(null !== result) {
             // We have a match here
-            PARSER[i].reply(PARSER[i].city, PARSER[i].template);
+            return PARSER[i].reply(PARSER[i].city, PARSER[i].template);
             // if(null === PARSER[i].expectIndex) {
             //     // Match the whole string will do
             //     return PARSER[i].reply;
