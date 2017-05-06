@@ -135,7 +135,7 @@ const PARSER = [
         reply: now,
         city: DEFAULT_CITY,
         template: (r, city, country) =>
-            `${city}${undefined === country ? "" : `(${country}`} 現在 ${r.now.tmp} 度，體感溫度 ${r.now.fl} 度，濕度 ${r.now.hum}%～\n天氣是 ${WeatherCode[code].zhtw}`
+            `${city}${undefined === country ? "" : `(${country}`} 現在 ${r.now.tmp} 度，體感溫度 ${r.now.fl} 度，濕度 ${r.now.hum}%～\n天氣是 ${WeatherCode[r.now.cond.code].zhtw}`
     },
     // {
     //     // https://regex101.com/r/UbspfJ/2
