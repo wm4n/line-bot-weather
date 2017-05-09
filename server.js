@@ -31,7 +31,7 @@ bot.on('message', function(event) {
 const app = express();
 const linebotParser = bot.parser();
 
-//app.use(bodyParser.json());
+app.use(bodyParser.json());
 app.use(function (req, res, next) {
   // console.log(JSON.stringify(req, (key, value) => {
   //   if("res" === key || "req" === key || "_httpMessage" === key || "HTTPParser" === key || "TimersList" === key || "TCP" === key || "ServerResponse" === key) {
