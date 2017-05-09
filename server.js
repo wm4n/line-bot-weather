@@ -28,13 +28,12 @@ bot.on('message', function(event) {
 const app = express();
 const linebotParser = bot.parser();
 
-app.use(bodyParser.json())
-app.use(function (req, res, next) {
-  console.log(JSON.stringify(req, null, 2));
-  next();
-})
-
 app.post('/', linebotParser);
+
+app.use(bodyParser.json());
+app.use(function (req, res) {
+  console.log(JSON.stringify(req, null, 2));
+});
 
 app.listen(PORT, function () {
   console.log(`Express server is up on port ${PORT}`);
