@@ -29,11 +29,9 @@ const app = express();
 const linebotParser = bot.parser();
 
 app.use(bodyParser.json())
-app.use(function (req, res) {
-  console.log(JSON.stringify(req.body, null, 2));
-  // res.setHeader('Content-Type', 'text/plain')
-  // res.write('you posted:\n')
-  // res.end(JSON.stringify(req.body, null, 2))
+app.use(function (req, res, next) {
+  console.log(JSON.stringify(req, null, 2));
+  next();
 })
 
 app.post('/', linebotParser);
