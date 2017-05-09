@@ -28,12 +28,20 @@ bot.on('message', function(event) {
 const app = express();
 const linebotParser = bot.parser();
 
-// app.post('/', linebotParser);
-
 app.use(bodyParser.json());
-app.use(function (req, res) {
-  console.log(JSON.stringify(req, null, 2));
+app.use(function (req, res, next) {
+  // console.log(JSON.stringify(req, (key, value) => {
+  //   if("res" === key || "req" === key || "_httpMessage" === key || "HTTPParser" === key || "TimersList" === key || "TCP" === key || "ServerResponse" === key) {
+  //     return;
+  //   }
+  //   return value;
+  // }, 2));
+  console.log("=== HEADER ===", JSON.stringify(req.headers, null, 2));
+  console.log("=== BODY ===", JSON.stringify(req.body, null, 2));
+  next();
 });
+
+app.post('/', linebotParser);
 
 app.listen(PORT, function () {
   console.log(`Express server is up on port ${PORT}`);
