@@ -28,7 +28,7 @@ bot.on('message', function(event) {
 const app = express();
 const linebotParser = bot.parser();
 
-app.post('/', linebotParser);
+// app.post('/', linebotParser);
 
 app.use(bodyParser.json());
 app.use(function (req, res) {
