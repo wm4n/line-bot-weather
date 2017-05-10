@@ -15,6 +15,18 @@ const bot = linebot({
   channelAccessToken: process.env.channelAccessToken
 });
 
+const proxy = require('http-proxy').createProxyServer({
+    host: 'http://10.0.108.220:4001',
+    // port: 80
+});
+
+app.use('/', function(req, res, next) {
+    proxy.web(req, res, {
+        target: 'http://10.0.108.220:4001'
+    }, next);
+});
+
+
 //console.log(process.env.channelId, "\n", process.env.channelSecret, "\n", process.env.channelAccessToken);
 
 bot.on('message', function(event) {
@@ -29,23 +41,17 @@ bot.on('message', function(event) {
 
 // Create our app
 const app = express();
-const linebotParser = bot.parser();
+// const linebotParser = bot.parser();
 
-app.use(bodyParser.json());
-app.use(function (req, res, next) {
-  // console.log(JSON.stringify(req, (key, value) => {
-  //   if("res" === key || "req" === key || "_httpMessage" === key || "HTTPParser" === key || "TimersList" === key || "TCP" === key || "ServerResponse" === key) {
-  //     return;
-  //   }
-  //   return value;
-  // }, 2));
-  console.log("=== HEADER ===", JSON.stringify(req.headers, null, 2));
-  console.log("=== RAW BODY ===\n", req.rawBody);
-  console.log("=== BODY ===", JSON.stringify(req.body, null, 2));
-  next();
-});
+//app.use(bodyParser.json());
+// app.use(function (req, res, next) {
+//   console.log("=== HEADER ===", JSON.stringify(req.headers, null, 2));
+//   console.log("=== RAW BODY ===\n", req.rawBody);
+//   console.log("=== BODY ===", JSON.stringify(req.body, null, 2));
+//   next();
+// });
 
-app.post('/', linebotParser);
+// app.post('/', linebotParser);
 
 app.listen(PORT, function () {
   console.log(`Express server is up on port ${PORT}`);
