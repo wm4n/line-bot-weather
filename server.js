@@ -4,9 +4,9 @@ const linebot = require("linebot");
 const chat = require("./chat.js");
 
 // for test
-var bodyParser = require('body-parser');
+//var bodyParser = require('body-parser');
 
-const PORT = process.env.PORT || 3123;
+const PORT = process.env.PORT || 4321;
 const HEWEATHER_KEY = process.env.heweather_key;
 
 const bot = linebot({
@@ -15,10 +15,10 @@ const bot = linebot({
   channelAccessToken: process.env.channelAccessToken
 });
 
-const proxy = require('http-proxy').createProxyServer({
-    host: 'http://10.0.108.220:4001',
-    // port: 80
-});
+// const proxy = require('http-proxy').createProxyServer({
+//     host: 'http://10.0.108.220:4001',
+//     // port: 80
+// });
 
 
 //console.log(process.env.channelId, "\n", process.env.channelSecret, "\n", process.env.channelAccessToken);
@@ -35,13 +35,16 @@ bot.on('message', function(event) {
 
 // Create our app
 const app = express();
-// const linebotParser = bot.parser();
+const linebotParser = bot.parser();
 
-app.use('/', function(req, res, next) {
-    proxy.web(req, res, {
-        target: 'http://10.0.108.220:4001'
-    }, next);
-});
+// === Proxy ===
+// const httpProxy = require('http-proxy');
+// app.use('/', function(req, res, next) {
+//     httpProxy.web(req, res, {
+//         target: 'http://10.0.108.220:4001'
+//     }, next);
+// });
+
 //app.use(bodyParser.json());
 // app.use(function (req, res, next) {
 //   console.log("=== HEADER ===", JSON.stringify(req.headers, null, 2));
@@ -51,6 +54,9 @@ app.use('/', function(req, res, next) {
 // });
 
 // app.post('/', linebotParser);
+app.post('/', function (req, res) {
+  res.redirect("http://wman.ddns.net:4321/");
+});
 
 app.listen(PORT, function () {
   console.log(`Express server is up on port ${PORT}`);
