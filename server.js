@@ -20,12 +20,6 @@ const proxy = require('http-proxy').createProxyServer({
     // port: 80
 });
 
-app.use('/', function(req, res, next) {
-    proxy.web(req, res, {
-        target: 'http://10.0.108.220:4001'
-    }, next);
-});
-
 
 //console.log(process.env.channelId, "\n", process.env.channelSecret, "\n", process.env.channelAccessToken);
 
@@ -43,6 +37,11 @@ bot.on('message', function(event) {
 const app = express();
 // const linebotParser = bot.parser();
 
+app.use('/', function(req, res, next) {
+    proxy.web(req, res, {
+        target: 'http://10.0.108.220:4001'
+    }, next);
+});
 //app.use(bodyParser.json());
 // app.use(function (req, res, next) {
 //   console.log("=== HEADER ===", JSON.stringify(req.headers, null, 2));
