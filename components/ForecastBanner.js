@@ -11,9 +11,9 @@ export default ({ data }) => {
         <div className="unit">ºC</div>
         <div style={{"flex": "1"}} />
         <div className="detail-container">
-          <div className="info-text">Cloud: <b>{data.clouds}%</b></div>
-          <div className="info-text">Humidity: <b>{data.humidity}%</b></div>
-          <div className="info-text">Wind: <b>{data.wind}m/s</b></div>
+          <div className="info-text">雲量: <b>{data.clouds}%</b></div>
+          <div className="info-text">濕度: <b>{data.humidity}%</b></div>
+          <div className="info-text">風速: <b>{data.wind}m/s</b></div>
         </div>
       </div>
       <style jsx>{`

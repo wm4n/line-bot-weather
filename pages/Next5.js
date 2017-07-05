@@ -43,7 +43,7 @@ class Next5 extends React.Component {
       <div className="root-container">
         <Head>
           <title>{query.location}
-            5 Days Forecast</title>
+            5日預報</title>
           <meta name="viewport" content="initial-scale=1.0, width=device-width"/>
           <style dangerouslySetInnerHTML={{__html: stylesheet}} />
         </Head>
@@ -83,9 +83,7 @@ class Next5 extends React.Component {
           }
           .content-container {
             display: inline-block;
-            margin-top: 1rem;
-            margin-left: auto;
-            margin-right: auto;
+            margin: auto auto;
             text-align: left;
             width: 90vw;
             border: 1px solid #DDDDDD;
