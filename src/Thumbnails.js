@@ -3,7 +3,7 @@ const NodeCache = require('node-cache');
 const { iconCodeMapping } = require('./WeatherIcon');
 
 const thumbnailCache = new NodeCache( { stdTTL: 6000, checkperiod: 0 } );
-const fontPath = '/System/Library/Fonts/PingFang.ttc';
+const fontPath = `${__dirname}/../font/NotoSansTC-Regular.otf`;
 
 function createThumbnail(iconCode, bgColor, location, temp, humidity, desc) {
     // gm(256, 384)
