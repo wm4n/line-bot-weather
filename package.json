@@ -4,6 +4,7 @@
   "description": "A LINE bot that responds to weather conversation",
   "main": "server.js",
   "scripts": {
+    "heroku-postbuild": "next build",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server/server.js"
   },
