@@ -3,6 +3,7 @@ const queryString = require('query-string');
 const { currentGeoWeather, currentGeoWeatherForLatLon } = require('./GeoWeather');
 const MessageParser = require('./MessageParser');
 const { serverDomain } = require('./ServerSettings');
+const UserConfig = require('./database/UserConfig')
 
 function replyMessage(event, message) {
   event.reply(message);
@@ -31,10 +32,33 @@ function replyConfirmCard(event, confirmText) {
   });
 }
 
+function replyCustomConfirmCard(event, customOptions) {
+  // altText for 電腦版 line
+  event.reply({
+    type: 'template',
+    altText: customOptions.confirmText,
+    template: {
+      type: 'confirm',
+      text: customOptions.confirmText,
+      actions: [
+        {
+          type: 'message',
+          label: customOptions.label1,
+          text: customOptions.text1
+        }, {
+          type: 'message',
+          label: customOptions.label2,
+          text: customOptions.text2
+        }
+      ]
+    }
+  });
+}
+
 function getCardTemplate(data) {
   const location = data.location.addr;
   const { temp, humidity } = data;
-  const { icon, desc } = data;
+  const { icon, desc, unit } = data;
   const replyMsg = `現在溫度${temp}，濕度${humidity}，天氣${desc}`;
   const queryParams = {
     lat: data.location.lat,
@@ -46,10 +70,18 @@ function getCardTemplate(data) {
     temp,
     humidity,
     clouds: data.clouds,
-    wind: data.wind };
+    wind: data.wind,
+    unit };
   // lat=25.03&lon=121.57&location=TAIPEI&dt=1498746600&desc=clearsky&icon=02n&temp=26&humidity=66&clouds=20&wind=1
+  const thumbnailParam = { 
+    location,
+    temp,
+    humidity,
+    desc,
+    unit
+  };
   return {
-    thumbnailImageUrl: `${serverDomain}/img/${icon}?location=${location}&temp=${temp}&humidity=${humidity}&desc=${desc}`,
+    thumbnailImageUrl: `${serverDomain}/img/${icon}?${queryString.stringify(thumbnailParam)}` ,
     title: location,
     text: replyMsg,
     actions: [
@@ -76,6 +108,7 @@ function replyLocationWeatherCard(event, geoWeatherData) {
     const replyMsg = `現在溫度${temp}，濕度${humidity}，天氣${desc}`;
     let cardData = getCardTemplate(geoWeatherData[0]);
     cardData.type = 'buttons';
+    console.log(cardData);
     event.reply({
       type: 'template',
       altText: location + ": " + replyMsg,
@@ -83,6 +116,7 @@ function replyLocationWeatherCard(event, geoWeatherData) {
     });
   } else {
     // Multiple locations, use carousel to reply
+    console.log('geoWeatherMap: ' + JSON.stringify(geoWeatherData));
     const aggregateData = geoWeatherData.map(data => {
       const location = data.location.addr;
       const {temp, humidity} = data;
@@ -120,46 +154,79 @@ bot.on('message', function (event) {
     const msg = event.message.text;
     const parsed = MessageParser(msg);
     if ('now' === parsed.type) {
-      const weatherResults = parsed
-        .parsedText
-        .slice(0, 3)
-        .map(text => new Promise((resolve, reject) => currentGeoWeather(text, (err, res) => {
-          if (res) 
-            resolve(res);
-          else 
-            resolve(null);
-          }
-        )));
-      Promise
-        .all(weatherResults.filter(r => r != null))
-        .then(results => replyLocationWeatherCard(event, results))
-        .catch(err => {
-          if ('ZERO_RESULTS' === err.message) {
-            event.reply({type: 'text', text: '找不到這個地點，真的存在嗎？'});
-          } else {
-            console.log(err);
-          }
-        });
-    } else if ('daddy' === parsed.type) {
-      replyMessage(event, '丞丞的爸爸帥帥～' + String.fromCodePoint(0x100006));
-    } else if ('husband of aunt' === parsed.type) {
-      replyMessage(event, '芷媃的爸爸也不錯帥帥～' + String.fromCodePoint(0x100007));
-    } else if ('aunt' === parsed.type) {
-      replyMessage(event, '姑姑要出國去玩 討厭～' + String.fromCodePoint(0x10001D));
+      event.source.profile().then(profile => {
+        UserConfig.findById(profile.userId,
+          (err, res) => {
+            if(err) throw err;
+            let tempUnitPref;
+            if(res) tempUnitPref = res.tempUnitPref;
+            const weatherResults = parsed
+              .parsedText
+              .slice(0, 3)
+              .map(text => new Promise((resolve, reject) => currentGeoWeather(text, tempUnitPref, (err, res) => {
+                if (res) 
+                  resolve(res);
+                else 
+                  resolve(null);
+                }
+              )));
+            Promise
+              .all(weatherResults.filter(r => r != null))
+              .then(results => replyLocationWeatherCard(event, results))
+              .catch(err => {
+                if ('ZERO_RESULTS' === err.message) {
+                  event.reply({type: 'text', text: '找不到這個地點，真的存在嗎？'});
+                } else {
+                  console.log(err);
+                }
+              });    
+          });
+      });
+    }
+    else if('unit' === parsed.type) {
+      replyCustomConfirmCard(event, {
+        confirmText: '要設定溫度單位嗎？\n請選擇：',
+        label1: '公制(ºC)',
+        text1: '公制(ºC)',
+        label2: '英制(ºF)',
+        text2: '英制(ºF)'
+      });
+    }
+    else if('set-unit' === parsed.type) {
+      event.source.profile().then(profile => {
+        replyMessage(event, `${profile.displayName} 已將你的單位設為 ${msg} 了喔～` + String.fromCodePoint(0x100090));
+        UserConfig.findByIdAndUpdate(profile.userId,
+          { $set: {tempUnitPref: parsed.to} },
+          { upsert: true },
+          (err, res) => {
+            if(err) throw err;
+            else console.log(`Update tempUnitPref to ${parsed.to} for ${profile.displayName}`);
+          });
+      }).catch(err => {
+          console.log('Getting profile for changing unit failed! ', err);
+      });
     }
   } else if ('location' === event.message.type) {
-    const {latitude, longitude} = event.message;
-    currentGeoWeatherForLatLon(latitude, longitude, (err, res) => {
-      if (res) {
-        console.log(res);
-        replyLocationWeatherCard(event, res);
-      } else {
-        if ('ZERO_RESULTS' === err.message) {
-          event.reply({type: 'text', text: '找不到這個地點，真的存在嗎？'});
-        } else {
-          console.log(err);
-        }
-      }
+    event.source.profile().then(profile => {
+        UserConfig.findById(profile.userId,
+          (err, res) =>{
+            if(err) throw err;
+            let tempUnitPref;
+            if(res) tempUnitPref = res.tempUnitPref;
+            const {latitude, longitude} = event.message;
+            currentGeoWeatherForLatLon(latitude, longitude, tempUnitPref, (err, res) => {
+              if (res) {
+                console.log([res]);
+                replyLocationWeatherCard(event, [ res ]);
+              } else {
+                if ('ZERO_RESULTS' === err.message) {
+                  event.reply({type: 'text', text: '找不到這個地點，真的存在嗎？'});
+                } else {
+                  console.log(err);
+                }
+              }
+            });
+          });
     });
   }
 });

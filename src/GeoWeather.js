@@ -85,15 +85,14 @@ function geoCode(uri, callback, language) {
         });
 }
 
-function forecastWeather(location, callback, language) {
+function forecastWeather(location, unit = 'metric', callback, language) {
   const params = {
     lat: location.lat,
     lon: location.lon,
-    units: 'metric',
+    units: unit,
     appid: weatherKey,
     lang: language || 'zh_tw'
   };
-  // console.log(params);
   axios
     .get('http://api.openweathermap.org/data/2.5/forecast', {params})
     .then(res => {
@@ -109,7 +108,8 @@ function forecastWeather(location, callback, language) {
           icon: item.weather[0].icon,
           clouds: item.clouds.all,
           humidity: item.main.humidity,
-          wind: item.wind.speed
+          wind: item.wind.speed,
+          unit
         }
       });
       
@@ -121,11 +121,11 @@ function forecastWeather(location, callback, language) {
     });
 }
 
-function currentWeather(location, callback, language) {
+function currentWeather(location, unit = 'metric', callback, language) {
     const params = {
         lat: location.lat,
         lon: location.lon,
-        units: 'metric',
+        units: unit,
         appid: weatherKey,
         lang: language || 'zh_tw'
     };
@@ -145,7 +145,8 @@ function currentWeather(location, callback, language) {
               icon: weather[0].icon,
               clouds: clouds.all,
               humidity: main.humidity,
-              wind: wind.speed
+              wind: wind.speed,
+              unit
             };
             // console.log(JSON.stringify(result, null, 2));
             callback(undefined, result);
@@ -155,18 +156,18 @@ function currentWeather(location, callback, language) {
         });
 }
 
-function currentGeoWeatherForLatLon(lat, lon, callback, language) {
-    currentGeoWeatherUri(uriForLatLon(lat, lon, language), callback);
+function currentGeoWeatherForLatLon(lat, lon, unit, callback, language) {
+    currentGeoWeatherUri(uriForLatLon(lat, lon, language), unit, callback);
 }
 
-function currentGeoWeather(searchText, callback, language) {
-    currentGeoWeatherUri(uriForSearch(searchText, language), callback);
+function currentGeoWeather(searchText, unit, callback, language) {
+    currentGeoWeatherUri(uriForSearch(searchText, language), unit, callback);
 }
 
-function currentGeoWeatherUri(uri, callback) {
+function currentGeoWeatherUri(uri, unit, callback) {
     geoCode(uri, (errLoc, loc) => {
         if(loc) {
-            currentWeather(loc[0], (errWeather, weather) => {
+            currentWeather(loc[0], unit, (errWeather, weather) => {
                 if(weather) {
                     weather.location = loc[0];
                     callback(undefined, weather);

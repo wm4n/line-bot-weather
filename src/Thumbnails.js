@@ -5,7 +5,7 @@ const { iconCodeMapping } = require('./WeatherIcon');
 const thumbnailCache = new NodeCache( { stdTTL: 6000, checkperiod: 0 } );
 const fontPath = `${__dirname}/../font/NotoSansTC-Regular.otf`;
 
-function createThumbnail(iconCode, bgColor, location, temp, humidity, desc) {
+function createThumbnail(iconCode, bgColor, location, temp, humidity, desc, unit) {
     // gm(256, 384)
     //     .in("gradient:#b6fbff-#83a4d4")
     //     .font("/System/Library/Fonts/Arial Unicode.ttf", 30)
@@ -34,6 +34,7 @@ function createThumbnail(iconCode, bgColor, location, temp, humidity, desc) {
             }
             else {
                 if(value == undefined) {
+                  const unitText = 'metric' === unit ? 'ºC' : 'ºF';
                     gm(384, 256)
                         .in('gradient:#56ccf2-#2f80ed')
                         .font(fontPath, 24)
@@ -41,7 +42,7 @@ function createThumbnail(iconCode, bgColor, location, temp, humidity, desc) {
                         .stroke('#111111', 1)
                         .drawText(110, 90, `${location}`)
                         .stroke('#333333', 0.5)
-                        .drawText(110, 130, `現在溫度${fixtemp}℃，濕度${humidity}%`)
+                        .drawText(110, 130, `現在溫度${fixtemp}${unitText}，濕度${humidity}%`)
                         .drawText(110, 160, `室外天氣是${desc}`)
                         .toBuffer('PNG', function (err, buffer) {
                             if (err) { console.log(err); reject(err); }

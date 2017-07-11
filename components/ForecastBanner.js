@@ -1,19 +1,19 @@
 const moment = require('moment');
 const { iconCodeMapping } = require('../src/WeatherIcon');
 
-export default ({ data }) => {
+export default ({ data, unit }) => {
   return (
     <div>
       <h5>{`${moment.unix(data.dt).locale('zh-tw').format('dddd a h:mm')}, ${data.desc}`}</h5>
       <div className="banner-container">
         <img src={iconCodeMapping[data.icon]}></img>
         <div className="degree">{data.temp}</div>
-        <div className="unit">ºC</div>
+        <div className="unit">&deg;{unit === 'metric' ? 'C' : 'F'}</div>
         <div style={{"flex": "1"}} />
         <div className="detail-container">
           <div className="info-text">雲量: <b>{data.clouds}%</b></div>
           <div className="info-text">濕度: <b>{data.humidity}%</b></div>
-          <div className="info-text">風速: <b>{data.wind}m/s</b></div>
+          <div className="info-text">風速: <b>{data.wind}{unit === 'metric' ? 'm/s' : 'mph'}</b></div>
         </div>
       </div>
       <style jsx>{`

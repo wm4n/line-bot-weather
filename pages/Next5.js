@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import React from 'react';
 import axios from 'axios';
+import moment from 'moment';
 import ForecastBannerTab from '../components/ForecastBannerTab';
 import MiniForecastCard from '../components/MiniForecastCard';
 import {forecastWeather} from '../src/GeoWeather';
@@ -12,12 +13,33 @@ class Next5 extends React.Component {
   constructor(props) {
     super(props);
     if(props.forecast) {
-      const total = props.forecast.length, perDay = 8;
-      let i, j;
+      //const total = props.forecast.length, perDay = 8;
+      let lastMoment;
+      let tempList = [];
       let forecastList = [];
-      for (i = 0; i < total; i += perDay) {
-          forecastList.push(props.forecast.slice(i, i + perDay));
-      }
+      props.forecast.forEach(
+        item => {
+          if(lastMoment === undefined) {
+            lastMoment = moment.unix(item.dt);
+            item.moment = lastMoment;
+            tempList.push(item);
+            return;
+          }
+          else {
+            let currentMoment = moment.unix(item.dt);
+            item.moment = currentMoment;
+            if(lastMoment.isSame(currentMoment, 'day')) {
+              tempList.push(item);
+            }
+            else {
+              forecastList.push(tempList);
+              tempList = [];
+              tempList.push(item);
+              lastMoment = currentMoment;
+            }
+          }
+        }
+      );
       this.state = { forecastIdx: 0, forecastList };
     }
     else {
@@ -50,28 +72,34 @@ class Next5 extends React.Component {
         <div className="content-container">
           <ForecastBannerTab className=""
             locationText={query.location}
-            forecast={forecastList[this.state.forecastIdx]}/>
+            forecast={forecastList[this.state.forecastIdx]}
+            unit={query.unit}/>
           <div className="next5-container">
             <MiniForecastCard
               onClick={() => this.setState({forecastIdx: 0})}
               forecastList={forecastList[0]}
-              isSelected={0 === this.state.forecastIdx}/>
+              isSelected={0 === this.state.forecastIdx}
+              unit={query.unit}/>
             <MiniForecastCard
               onClick={() => this.setState({forecastIdx: 1})}
               forecastList={forecastList[1]}
-              isSelected={1 === this.state.forecastIdx}/>
+              isSelected={1 === this.state.forecastIdx}
+              unit={query.unit}/>
             <MiniForecastCard
               onClick={() => this.setState({forecastIdx: 2})}
               forecastList={forecastList[2]}
-              isSelected={2 === this.state.forecastIdx}/>
+              isSelected={2 === this.state.forecastIdx}
+              unit={query.unit}/>
             <MiniForecastCard
               onClick={() => this.setState({forecastIdx: 3})}
               forecastList={forecastList[3]}
-              isSelected={3 === this.state.forecastIdx}/>
+              isSelected={3 === this.state.forecastIdx}
+              unit={query.unit}/>
             <MiniForecastCard
               onClick={() => this.setState({forecastIdx: 4})}
               forecastList={forecastList[4]}
-              isSelected={4 === this.state.forecastIdx}/>
+              isSelected={4 === this.state.forecastIdx}
+              unit={query.unit}/>
           </div>
         </div>
         <style jsx>{`
@@ -107,8 +135,9 @@ Next5.getInitialProps = async({query}) => {
   const res = await new Promise((resolve, reject) => {
     forecastWeather({
       lat: query.lat,
-      lon: query.lon
-    }, (err, res) => {
+      lon: query.lon,
+    }, query.unit,
+    (err, res) => {
       if (res) {
         resolve(res);
       }

@@ -12,13 +12,17 @@ class ForecastBannerTab extends React.Component {
   constructor(props) {
     super(props);
     const { locationText, forecast } = props;
+    this.marks = {};
+    forecast.forEach(
+      (item, index) => this.marks[index] = item.moment.locale('zh-tw').format('a h:mm')
+      );
     this.state = { locationText, forecast, tabIndex: 0 };
   }
 
-  renderTabPanel(item) {
+  renderTabPanel(item, unit) {
     return (
       <TabPanel key={`tp${item.dt}`}>
-        <ForecastBanner data={item} />
+        <ForecastBanner data={item} unit={unit}/>
       </TabPanel>
     );
   };
@@ -47,8 +51,15 @@ class ForecastBannerTab extends React.Component {
     this.setState({tabIndex: e});
   }
 
+  getMarks() {
+  }
+
   componentWillReceiveProps(nextProps) {
     const { locationText, forecast } = nextProps;
+    this.marks = {}
+    forecast.forEach(
+      (item, index) => this.marks[index] = item.moment.locale('zh-tw').format('a h:mm')
+      );
     this.setState({ locationText, forecast, tabIndex: 0 });
   }
 
@@ -59,13 +70,19 @@ class ForecastBannerTab extends React.Component {
         <h3>{locationText}</h3>
         <Tabs selectedIndex={tabIndex}
           onSelect={false}>
-          {forecast.map(item => this.renderTabPanel(item))}
+          {forecast.map(item => this.renderTabPanel(item, this.props.unit))}
           <TabList style={{display: "none"}}>
             {forecast.map(item => this.renderTab(item))}
           </TabList>
         </Tabs>
         <div className="slider">
-          <Slider min={0} max={forecast.length-1} value={tabIndex} handle={this.handle} onChange={e => this.onSlided(e)}/>
+          <Slider
+            min={0}
+            max={forecast.length-1}
+            value={tabIndex}
+            handle={this.handle}
+            onChange={e => this.onSlided(e)}
+            marks={this.marks}/>
         </div>
         <style jsx>{`
           .root {
@@ -74,7 +91,8 @@ class ForecastBannerTab extends React.Component {
             justify-content: space-around;
           }
           .slider {
-            margin: 0.5rem 1rem;
+            margin: 0.8rem 0.8rem;
+            padding-bottom: 1.5rem;
           }
         `}
         </style>

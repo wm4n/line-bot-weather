@@ -9,8 +9,8 @@ module.exports = app => {
 
     // Handle image request for card
     app.get('/img/:id', (req, res) => {
-        const { location, temp, humidity, desc } = req.query;
-        createThumbnail(req.params.id, '#5e99f3', location, temp, humidity, desc)
+        const { location, temp, humidity, desc, unit } = req.query;
+        createThumbnail(req.params.id, '#5e99f3', location, temp, humidity, desc, unit)
             .then( buffer => res.status(200).send(buffer) )
             .catch( err => res.status(404).send(`Icon ${req.params.id} cannot be found!`) );
     });

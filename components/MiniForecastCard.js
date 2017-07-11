@@ -1,7 +1,7 @@
 const moment = require('moment');
 const { iconCodeMapping } = require('../src/WeatherIcon');
 
-export default ({ onClick, forecastList, isSelected }) => {
+export default ({ onClick, forecastList, isSelected, unit }) => {
   if(forecastList !== undefined && forecastList.length > 0) {
     const first = forecastList[0];
     const maxAndMin = forecastList.reduce((acc, current) => {
@@ -17,8 +17,8 @@ export default ({ onClick, forecastList, isSelected }) => {
       <div onClick={onClick} className={isSelected ? "selected" : ""}>
         <p>{moment.unix(first.dt).locale('zh-tw').format('dddd')}</p>
         <img src={iconCodeMapping[first.icon]}/>
-        <p>{maxAndMin.max}&deg;C</p>
-        <p>{maxAndMin.min}&deg;C</p>
+        <p>{maxAndMin.max}&deg;{unit === 'metric' ? 'C' : 'F'}</p>
+        <p>{maxAndMin.min}&deg;{unit === 'metric' ? 'C' : 'F'}</p>
         <style jsx>{`
           div {
             display: flex;
