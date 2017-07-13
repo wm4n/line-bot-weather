@@ -3,7 +3,8 @@ const queryString = require('query-string');
 const { currentGeoWeather, currentGeoWeatherForLatLon } = require('./GeoWeather');
 const MessageParser = require('./MessageParser');
 const { serverDomain } = require('./ServerSettings');
-const UserConfig = require('./database/UserConfig')
+const UserConfig = require('./database/UserConfig');
+const { createImageMap } = require('./Thumbnails');
 
 function replyMessage(event, message) {
   event.reply(message);
@@ -99,13 +100,14 @@ function getCardTemplate(data) {
 }
 
 // Reply carousel
-function replyLocationWeatherCard(event, geoWeatherData) {
+function replyLocationWeatherCard(event, geoWeatherData, unit) {
+  const unitText = 'metric' === unit ? 'ºC' : 'ºF';
   if (geoWeatherData.length === 1) {
     // 1 location, use card to reply
     const location = geoWeatherData[0].location.addr;
     const {temp, humidity} = geoWeatherData[0];
     const {icon, desc} = geoWeatherData[0];
-    const replyMsg = `現在溫度${temp}，濕度${humidity}，天氣${desc}`;
+    const replyMsg = `現在溫度${temp}${unitText}，濕度${humidity}%，天氣${desc}`;
     let cardData = getCardTemplate(geoWeatherData[0]);
     cardData.type = 'buttons';
     console.log(cardData);
@@ -121,7 +123,7 @@ function replyLocationWeatherCard(event, geoWeatherData) {
       const location = data.location.addr;
       const {temp, humidity} = data;
       const {icon, desc} = data;
-      const replyMsg = `${location}現在溫度${temp}，濕度${humidity}，天氣${desc}`;
+      const replyMsg = `${location}現在溫度${temp}${unitText}，濕度${humidity}%，天氣${desc}`;
 
       return {replyMsg, carousel: getCardTemplate(data)};
     });
@@ -144,6 +146,55 @@ function replyLocationWeatherCard(event, geoWeatherData) {
       }
     });
   }
+}
+
+function replyImageMap(event) {
+  createImageMap()
+    .then(res => {
+      console.log(res.htmlLink);
+      event.reply({
+        type: 'imagemap',
+        baseUrl: `${serverDomain}/guide/${Date.now()}`,
+        altText: '使用說明:\n輸入 > "丞丞 [地點]"\n輸入 > "丞丞 單位"',
+        baseSize: {
+          height: 1040,
+          width: 1040
+        },
+        actions: [
+          {
+            type: 'message',
+            text: '丞丞 台北市',
+            area: {
+              x: 0,
+              y: 170,
+              width: 1040,
+              height: 195
+            }
+          },
+          {
+            type: 'message',
+            text: '丞丞 單位',
+            area: {
+              x: 0,
+              y: 365,
+              width: 1040,
+              height: 195
+            }
+          },
+          {
+            type: 'uri',
+            linkUri: `${res.htmlLink}`,
+            area: {
+              x: 0,
+              y: 950,
+              width: 1040,
+              height: 90
+            }
+          }
+        ]
+      });
+    })
+    .catch(err => console.log(err));
 }
 
 const bot = linebot({channelId: process.env.channelId, channelSecret: process.env.channelSecret, channelAccessToken: process.env.channelAccessToken});
@@ -172,7 +223,7 @@ bot.on('message', function (event) {
               )));
             Promise
               .all(weatherResults.filter(r => r != null))
-              .then(results => replyLocationWeatherCard(event, results))
+              .then(results => replyLocationWeatherCard(event, results, tempUnitPref))
               .catch(err => {
                 if ('ZERO_RESULTS' === err.message) {
                   event.reply({type: 'text', text: '找不到這個地點，真的存在嗎？'});
@@ -206,6 +257,9 @@ bot.on('message', function (event) {
           console.log('Getting profile for changing unit failed! ', err);
       });
     }
+    else if('help' === parsed.type) {
+      replyImageMap(event);
+    }
   } else if ('location' === event.message.type) {
     event.source.profile().then(profile => {
         UserConfig.findById(profile.userId,
@@ -217,7 +271,7 @@ bot.on('message', function (event) {
             currentGeoWeatherForLatLon(latitude, longitude, tempUnitPref, (err, res) => {
               if (res) {
                 console.log([res]);
-                replyLocationWeatherCard(event, [ res ]);
+                replyLocationWeatherCard(event, [ res ], tempUnitPref);
               } else {
                 if ('ZERO_RESULTS' === err.message) {
                   event.reply({type: 'text', text: '找不到這個地點，真的存在嗎？'});
