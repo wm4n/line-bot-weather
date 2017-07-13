@@ -14,9 +14,9 @@ const thumbnailCache = new NodeCache( { stdTTL: 3600 } );
 const fontPath = `${__dirname}/../font/NotoSansTC-Regular.otf`;
 
 const unsplash = new Unsplash({
-  applicationId: "c769ed155e1518f71dfb51902e8f9a933a9a885aa824c44acc2ad2ca859f37c9",
-  secret: "d5ef96c93119f9e03c70d05498b31bd4829f0c33cf245d8e8a829a3aa1e3842c",
-  callbackUrl: "urn:ietf:wg:oauth:2.0:oob"
+  applicationId: process.env.Unsplash_applicationId,
+  secret: process.env.Unsplash_secret,
+  callbackUrl: process.env.Unsplash_callbackUrl
 });
 
 const imageMapCache = new NodeCache( { stdTTL: 3600 } );
