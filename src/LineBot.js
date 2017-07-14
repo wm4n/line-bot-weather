@@ -90,10 +90,6 @@ function getCardTemplate(data) {
         type: 'uri',
         label: '5日預報',
         uri: `${serverDomain}/Next5?${queryString.stringify(queryParams)}`
-      }, {
-        type: 'postback',
-        label: '給糖糖',
-        data: `addr=${location}&days=5`
       }
     ]
   };
