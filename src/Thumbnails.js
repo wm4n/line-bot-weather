@@ -84,25 +84,6 @@ function createImageMap() {
 //createImageMap();
 
 function createThumbnail(iconCode, bgColor, location, temp, humidity, desc, unit) {
-    // gm(256, 384)
-    //     .in("gradient:#b6fbff-#83a4d4")
-    //     .font("/System/Library/Fonts/Arial Unicode.ttf", 30)
-    //     .fill('#333333')
-    //     .drawText(50, 150, text)
-    //     .toBuffer('PNG', function (err, buffer) {
-    //         if (err) {
-    //             console.log(err);
-    //             return;
-    //         }
-    //         gm(buffer)
-    //             .composite('public/img/09d.png')
-    //             .geometry('+50+50')
-    //             .write('public/img/gradient_new.png', err => {
-    //                 if(err) console.log(err);
-    //                 else console.log('okay');
-    //             });
-    //     });
-
   return new Promise((resolve, reject) => {
       const fixtemp = Math.round(temp);
       const key = `${iconCode}_${location}_${fixtemp}_${humidity}_${desc}`;
@@ -129,7 +110,6 @@ function createThumbnail(iconCode, bgColor, location, temp, humidity, desc, unit
                               .geometry('+20+80')
                               .toBuffer('PNG', function (err, buffer) {
                                   if(err) reject(err);
-                                  //console.log('ok');
                                   resolve(buffer);
                               });
                               // .write('public/img/gradient_new.png', err => {
@@ -144,44 +124,12 @@ function createThumbnail(iconCode, bgColor, location, temp, humidity, desc, unit
               }
           }
       });
-      // === For Test ===
-      // gm(384, 256)
-      //     .in('gradient:#56ccf2-#2f80ed')
-      //     .font(fontPath, 24)
-      //     .fill('#333333')
-      //     .stroke('#111111', 1)
-      //     .drawText(110, 90, `${location}`)
-      //     .stroke('#333333', 0)
-      //     .drawText(110, 130, `現在溫度${temp}℃，濕度${humidity}%`)
-      //     .drawText(110, 160, `室外天氣是${desc}`)
-      //     .toBuffer('PNG', function (err, buffer) {
-      //         if (err) {
-      //             console.log(err);
-      //             return;
-      //         }
-      //         gm(buffer)
-      //             .composite('assets/weather_icon_set/mostlysunny.png')
-      //             .geometry('+20+80')
-      //             // .write('public/img/gradient_new.png', err => {
-      //             //     if(err) {
-      //             //         console.log(err);
-      //             //         reject(err);
-      //             //     }
-      //             //     else {
-      //             //         console.log('okay');
-      //             //         resolve();
-      //             //     }
-      //             // });
-      //             .toBuffer('PNG', function (err, buffer) {
-      //                 if(err) reject(err);
-      //                 resolve(buffer);
-      //             });
-      //     });
-      
   });
 }
 
+// For test
 //createThumbnail("01d", '#5e99f3', 'Melbourne', 22, 90, '小雨');
+
 module.exports.createImageMap = createImageMap;
 module.exports.createThumbnail = createThumbnail;
 module.exports.getImageMap = getImageMap;

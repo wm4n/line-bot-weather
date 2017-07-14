@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost/line-bot-weather');
+mongoose.connect(process.env.MONGODB_URI);
 
 module.exports = dbConnection = mongoose.connection;
