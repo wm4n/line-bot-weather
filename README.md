@@ -56,18 +56,18 @@ To experiment with LINE bot and Next.JS
   
 ### How to use (Currently command only supports Traditional Chinese Keywords)
 1. `丞丞 使用說明` or `丞丞 help`
-   
-  顯示 ImageMap 功能說明
+<br/>顯示 ImageMap 功能說明
 
 2. `丞丞 [地點1] [地點2] [地點3]`
-  
-  顯示地點的氣象 e.g. 丞丞 高雄市
+<br/>顯示地點的氣象 e.g. 丞丞 高雄市
 
 3. `丞丞 單位`
-  
-  切換顯示單位
+<br/>切換顯示單位
   
 4. 直接使用LINE送出位址資訊
+<br/>顯示地點的氣象
 
-  顯示地點的氣象
-  
+### TODO
+* Try LINE Broadcasting/Push API
+
+* Add first chat usage hint
