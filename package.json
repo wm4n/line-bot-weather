@@ -26,7 +26,7 @@
   },
   "homepage": "https://github.com/wm4n/line-bot-weather#readme",
   "dependencies": {
-    "axios": "^0.16.1",
+    "axios": "^0.21.1",
     "cssnano": "^3.10.0",
     "dotenv": "^4.0.0",
     "express": "^4.15.2",
